@@ -2,6 +2,7 @@ import subprocess
 from VirtualMachine import VirtualMachine as VM
 from VagrantFile import VagrantFile
 from Provision import Provision
+from Object2JSON import Object2JSON as JSON
 
 if __name__=="__main__":
   #Create one attacker VM and one victim VM
@@ -20,10 +21,11 @@ if __name__=="__main__":
   vfile = VagrantFile()
   vfile.addVM(attacker)
   vfile.addVM(victim)
-  vfile.enableGUI(True)
+  vfile.enableGUI(False)
   vfile.write()
   
   #Spin up the VMs
+  '''
   process = subprocess.Popen(['cmd', '/c','vagrant', 'up'], stdout=subprocess.PIPE, universal_newlines=True)
   while True:
           output = process.stdout.readline()
@@ -31,6 +33,7 @@ if __name__=="__main__":
               break
           if output:
               print(output.strip())
+  '''
   
   #Add provisions to test network connectivity
   pingAttacker = Provision("pingAttacker")
@@ -43,6 +46,7 @@ if __name__=="__main__":
   
   vfile.write()
   
+  '''
   #Run provisions
   print("Testing Connectivity...")
   process = subprocess.Popen(['cmd', '/k', 'vagrant', 'provision'], stdout=subprocess.PIPE, universal_newlines=True)
@@ -52,7 +56,7 @@ if __name__=="__main__":
               break
           if output:
               print(output.strip())
-  
+  '''
   #Add provisions to install software on VMs
   runMalwareProvision = Provision("installE0")
   runMalwareProvision.setShellCommand("./../../sharedfolder/e0.sh")
@@ -64,6 +68,7 @@ if __name__=="__main__":
   
   vfile.write()
   
+  '''
   #Mock software installation
   print("Installing software...")
   process = subprocess.Popen(['cmd', '/k','vagrant', 'provision'], stdout=subprocess.PIPE, universal_newlines=True)
@@ -73,3 +78,7 @@ if __name__=="__main__":
               break
           if output:
               print(output.strip())
+  '''
+  
+  JSON.VirtualMachine2JSON(attacker)
+  

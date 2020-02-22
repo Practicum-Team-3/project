@@ -20,3 +20,12 @@ class VirtualMachine(object):
 
     def setProvision(self, provision):
         self.provision = provision
+        
+    def virtualMachine2Dictionary(self):
+        vm_dict = dict()
+        vm_dict["os"] = self.os
+        vm_dict["name"] = self.name
+        vm_dict["shared_folders"] = self.shared_folders
+        vm_dict["ipAddress"] = self.ipAddress
+        #vm_dict["provision"] = self.provision
+        return vm_dict

@@ -1,0 +1,1 @@
+echo "Malware installed!!!"
