@@ -11,7 +11,7 @@ class Scenario(object):
     def enableGUI(self, isVisible):
         self.gui = isVisible
 
-    def _scenario2Dictionary(self):
+    def scenario2Dictionary(self):
         vf_dict = dict()
         vf_dict["machines"] = list()
         for name in self.machines:
@@ -20,7 +20,7 @@ class Scenario(object):
         return vf_dict
     
     def scenario2JSON(self , json_name):
-        json_dict = self._scenario2Dictionary()
+        json_dict = self.scenario2Dictionary()
         with open(json_name, 'w') as outfile:
           json.dump(json_dict, outfile)
         json_string = json.dumps(json_dict , indent = 2)

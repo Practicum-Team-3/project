@@ -1,9 +1,17 @@
 import json
+from pathlib import Path
 
 class VagrantFile(object):   
+  def __init__(self):
+    self.current_path = Path.cwd()
+    self.scenarios_path = self.current_path / "scenarios"
+
+    print(self.current_path)
+    print(self.scenarios_path)
+    
   def vagrantFileFromJSON(self , jsonFile):
     buffer = ""
-    with open(jsonFile) as json_file:
+    with open(self.scenarios_path / jsonFile) as json_file:
       vf = json.load(json_file )
     
     file = open("Vagrantfile", "w")

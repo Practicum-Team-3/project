@@ -1,0 +1,1 @@
+{"scenario_name" : "Scenario 1", "machines": [{"os": "laravel/homestead", "name": "attacker", "shared_folders": ["./attackerfiles", "/sharedfolder"], "ipAddress": "192.168.50.5"}, {"os": "laravel/homestead", "name": "victim", "shared_folders": ["./victimfiles", "/sharedfolder"], "ipAddress": "192.168.50.6"}], "gui": false}
