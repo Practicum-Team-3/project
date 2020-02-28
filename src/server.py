@@ -3,6 +3,8 @@ import os
 import json
 from pathlib import Path
 from flask import Flask, jsonify
+import subprocess
+import re
 
 app = Flask(__name__)
 
@@ -21,6 +23,28 @@ def get_scenarios():
       result.append(scenario_json["scenario_name"])
   scenarios_dict = { "scenarios" : result}
   return jsonify(scenarios_dict)
+
+
+@app.route('/boxes')
+def get_available_boxes():
+  #Variables
+  current_path = Path.cwd()
+  boxes_path = current_path / "boxes"
+  boxes = {}
+  boxNum = 0
+  boxlist = subprocess.check_output("vagrant box list", shell=True)
+  boxlist = str(boxlist)
+  boxlist = re.sub(r"(^[b']|'|\s(.*?)\\n)", " " , boxlist)
+  boxlist = boxlist.split(" ")
+  boxlist = filter(None, boxlist)
+
+  print("Loading available Vanilla VMs")
+
+  for boxName in boxlist:
+    boxNum = boxNum + 1
+    boxes[boxNum] = boxName
+    print("[ " + str(boxNum) + " ]" + boxName)
+  return jsonify(boxes)
     
 if __name__=="__main__":
   app.run()
