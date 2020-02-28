@@ -5,9 +5,6 @@ class VagrantFile(object):
   def __init__(self):
     self.current_path = Path.cwd()
     self.scenarios_path = self.current_path / "scenarios"
-
-    print(self.current_path)
-    print(self.scenarios_path)
     
   def vagrantFileFromJSON(self , jsonFile):
     buffer = ""

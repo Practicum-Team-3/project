@@ -6,7 +6,7 @@ class Provision(object):
     def setShellCommand(self, command , provision_type = "shell"):
         self.commands.append((provision_type, command))
         
-    def provision2Dictionary(self):
+    def dictionary(self):
         prov_dict = dict()
         prov_dict["name"] = self.name
         prov_dict["commands"] = self.commands
