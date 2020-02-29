@@ -25,7 +25,7 @@ def get_scenarios():
   return jsonify(scenarios_dict)
 
 
-@app.route('/boxes')
+@app.route('/boxes/all')
 def get_available_boxes():
   #Variables
   current_path = Path.cwd()
@@ -45,7 +45,28 @@ def get_available_boxes():
     boxes[boxNum] = boxName
     print("[ " + str(boxNum) + " ]" + boxName)
   return jsonify(boxes)
-    
+
+@app.route('/scenarios/new/<scenario_name>')
+def create_scenario(scenario_name):
+  #Variables
+  folders = ["JSON" , "Exploit" , "Vulnerability" , "Machines" ]
+  current_path = Path.cwd()
+  scenarios_path = current_path / "scenarios"
+  try:
+    os.makedirs(scenarios_path / scenario_name)
+  except OSError:
+    print ("Creation of the directory %s failed" % scenarios_path)
+  else:
+    print ("Successfully created the directory %s" % scenarios_path)
+  for f in folders:
+    path = scenarios_path / f
+    try:
+      os.makedirs(path)
+    except OSError:
+      print ("Creation of the directory %s failed" % path)
+    else:
+      print ("Successfully created the directory %s" % path)
+
 if __name__=="__main__":
   app.run()
   
