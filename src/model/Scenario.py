@@ -2,6 +2,8 @@ import json
 from unique_id import get_unique_id
 from datetime import datetime
 from pathlib import Path
+from src.model.ExploitInfo import ExploitInfo
+from src.model.VulnerabilityInfo import VulnerabilityInfo
 
 class Scenario(object):
     def __init__(self, scenario_name):
@@ -14,8 +16,8 @@ class Scenario(object):
         now = datetime.now()
         self.creation_date = now.strftime("%d/%m/%Y %H:%M:%S")
         self.last_accessed = self.creation_date[:]
-        self.exploit_info = None
-        self.vulnerability_info = None
+        self.exploit_info = ExploitInfo("" , "" , "")
+        self.vulnerability_info = VulnerabilityInfo("" , "" , "" , "")
         self.machines = dict()
 
     def setExploitInfo(self , exploit_info):
@@ -40,10 +42,10 @@ class Scenario(object):
           scenario_dict["machines"][name] = self.machines[name].dictionary()
         return scenario_dict
     
-    def generateScenario(self):
+    def generateScenario(self, scenario_name):
         json_dict = self.dictionary()
         json_name = self.scenario_name + ".json"
-        with open(self.scenarios_path / json_name, 'w') as outfile:
+        with open(self.scenarios_path / scenario_name / "JSON" / json_name, 'w') as outfile:
           json.dump(json_dict, outfile)
         json_string = json.dumps(json_dict , indent = 2)
         print(json_string)

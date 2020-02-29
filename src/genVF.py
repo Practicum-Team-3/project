@@ -1,10 +1,10 @@
 import subprocess
-from model.VirtualMachine import VirtualMachine as VM
-from model.Scenario import Scenario
-from model.ExploitInfo import ExploitInfo
-from model.VulnerabilityInfo import VulnerabilityInfo
-from model.NetworkSettings import NetworkSettings
-from model.Provision import Provision
+from src.model.VirtualMachine import VirtualMachine as VM
+from src.model.Scenario import Scenario
+from src.model.ExploitInfo import ExploitInfo
+from src.model.VulnerabilityInfo import VulnerabilityInfo
+from src.model.NetworkSettings import NetworkSettings
+from src.model.Provision import Provision
 
 if __name__ == "__main__":
   attacker = VM("attacker", "laravel/homestead")

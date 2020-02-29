@@ -1,13 +1,12 @@
-from model.VagrantFile import VagrantFile
 import os
 import json
 from pathlib import Path
 from flask import Flask, jsonify
 import subprocess
 import re
+from src.model.Scenario import Scenario
 
 app = Flask(__name__)
-
 
 @app.route('/scenarios/all')
 def get_scenarios():
@@ -51,23 +50,29 @@ def create_scenario(scenario_name):
   #Variables
   folders = ["JSON" , "Exploit" , "Vulnerability" , "Machines" ]
   current_path = Path.cwd()
-  scenarios_path = current_path / "scenarios"
+  scenario_path = current_path / "scenarios" / scenario_name
   try:
-    os.makedirs(scenarios_path / scenario_name)
+    os.makedirs(scenario_path )
   except OSError:
-    print ("Creation of the directory %s failed" % scenarios_path)
+    print ("Creation of the directory %s failed" % scenario_path)
   else:
-    print ("Successfully created the directory %s" % scenarios_path)
+    print ("Successfully created the directory %s" % scenario_path)
   for f in folders:
-    path = scenarios_path / f
+    path = scenario_path / f
     try:
       os.makedirs(path)
     except OSError:
       print ("Creation of the directory %s failed" % path)
     else:
       print ("Successfully created the directory %s" % path)
+  scenario = Scenario(scenario_name)
+  scenario.generateScenario(scenario_name)
+  result = { "result" : True}
+  print(result)
+  return jsonify(result)
 
 if __name__=="__main__":
+  #create_scenario("Scenario_1")
   app.run()
   
   

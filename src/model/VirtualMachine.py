@@ -1,11 +1,15 @@
+from src.model.NetworkSettings import NetworkSettings
+from src.model.Provision import Provision
+
+
 class VirtualMachine(object):
   def __init__(self, name, os):
     self.name = name
     self.os = os
-    self.shared_folders = None #tuples of (hostPath, guestPath)
-    self.network_settings = None
+    self.shared_folders = tuple() #tuples of (hostPath, guestPath)
+    self.network_settings = NetworkSettings("" , "" , "" , True)
     self.gui = False
-    self.provision = None #will be populated by provision objects
+    self.provision = Provision("pingVictim")
 
   def setOS(self, os):
     self.os = os
