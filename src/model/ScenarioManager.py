@@ -34,12 +34,6 @@ class ScenarioManager(object):
     def get_scenarios(self):
         # Variables
         scenarios = os.listdir(self.file_manager.getScenarioPath())
-        result = list()
-        # Get scenarios names
-        for scenario in scenarios:
-            with open(self.file_manager.getScenarioPath() / scenario) as json_file:
-                scenario_json = json.load(json_file)
-            result.append(scenario_json["scenario_name"])
-        scenarios_dict = {"scenarios": result}
+        scenarios_dict = {"scenarios": scenarios}
         return scenarios_dict
 
