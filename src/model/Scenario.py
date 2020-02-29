@@ -1,16 +1,15 @@
 import json
 from unique_id import get_unique_id
 from datetime import datetime
-from pathlib import Path
 from src.model.ExploitInfo import ExploitInfo
+from src.model.FileManager import FileManager
 from src.model.VulnerabilityInfo import VulnerabilityInfo
 
 class Scenario(object):
+
     def __init__(self, scenario_name):
-        #Paths
-        self.current_path = Path.cwd()
-        self.scenarios_path = self.current_path / "scenarios"
-        #Fields
+        self.file_manager = FileManager()
+        #Variables
         self.scenario_name =  scenario_name
         self.scenario_id =  get_unique_id(length=8)
         now = datetime.now()
@@ -45,7 +44,7 @@ class Scenario(object):
     def generateScenario(self, scenario_name):
         json_dict = self.dictionary()
         json_name = self.scenario_name + ".json"
-        with open(self.scenarios_path / scenario_name / "JSON" / json_name, 'w') as outfile:
+        with open(self.file_manager.getScenarioPath() / scenario_name / "JSON" / json_name, 'w') as outfile:
           json.dump(json_dict, outfile)
         json_string = json.dumps(json_dict , indent = 2)
         print(json_string)
