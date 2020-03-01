@@ -37,3 +37,40 @@ class ScenarioManager(object):
         scenarios_dict = {"scenarios": scenarios}
         return scenarios_dict
 
+
+    def scenarioExists(self, scenario_name):
+
+        #quickFix = scenario_name + "/JSON"
+        scenario_dir_path = self.file_manager.getScenarioPath() / scenario_name / "JSON"
+        print("TEST: %s " % scenario_dir_path)
+        if not os.path.isdir(scenario_dir_path):
+            print("Scenario %s directory not found" % scenario_name)
+            return False
+        else:
+            scenario_json_path = scenario_dir_path /  scenario_name / ".json"
+            if not os.path.exists(scenario_json_path):
+                print("Scenario %s json not found" % scenario_name)
+                return False
+            else:
+                return scenario_json_path
+
+
+    def getScenario(self, scenario_name):
+        
+        scenario_json_path = self.scenarioExists(scenario_name)
+        scenario_json = dict()
+        try:
+            with open(scenario_json_path) as json_file:
+                scenario_json = json.load(json_file)
+                return scenario_json
+
+        except:
+            print("Something went wrong while retrieving Scenario JSON")
+
+    
+    def changeScenario(self, scenario_name, new_scenario_json):
+        scenario_json_path = self.scenarioExists(scenario_name)
+        with open(scenario_json_path, 'w+') as outfile:
+          json.dump(scenario_json_path, outfile)
+
+
