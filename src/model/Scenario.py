@@ -44,7 +44,7 @@ class Scenario(object):
     def generateScenario(self, scenario_name):
         json_dict = self.dictionary()
         json_name = self.scenario_name + ".json"
-        with open(self.file_manager.getScenarioPath() / scenario_name / "JSON" / json_name, 'w') as outfile:
+        with open(self.file_manager.getScenariosPath() / scenario_name / "JSON" / json_name, 'w') as outfile:
           json.dump(json_dict, outfile)
         json_string = json.dumps(json_dict , indent = 2)
         print(json_string)

@@ -10,5 +10,5 @@ class FileManager(object):
     def getCurrentPath(self):
         return self.current_path
 
-    def getScenarioPath(self):
+    def getScenariosPath(self):
         return self.scenarios_path

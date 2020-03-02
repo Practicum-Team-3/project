@@ -8,10 +8,10 @@ class ScenarioManager(object):
     def __init__(self):
         self.file_manager = FileManager()
 
-    def create_scenario(self, scenario_name):
+    def createScenario(self, scenario_name):
         # Variables
         folders = ["JSON", "Exploit", "Vulnerability", "Machines"]
-        scenario_path = self.file_manager.getScenarioPath() / scenario_name
+        scenario_path = self.file_manager.getScenariosPath() / scenario_name
         try:
             os.makedirs(scenario_path)
         except OSError:
@@ -31,46 +31,44 @@ class ScenarioManager(object):
         result = {"result": True}
         return result
 
-    def get_scenarios(self):
+    def getScenarios(self):
         # Variables
-        scenarios = os.listdir(self.file_manager.getScenarioPath())
+        scenarios = os.listdir(self.file_manager.getScenariosPath())
         scenarios_dict = {"scenarios": scenarios}
         return scenarios_dict
 
 
     def scenarioExists(self, scenario_name):
-
-        #quickFix = scenario_name + "/JSON"
-        scenario_dir_path = self.file_manager.getScenarioPath() / scenario_name / "JSON"
-        print("TEST: %s " % scenario_dir_path)
+        scenario_dir_path = self.file_manager.getScenariosPath() / scenario_name / "JSON"
         if not os.path.isdir(scenario_dir_path):
             print("Scenario %s directory not found" % scenario_name)
             return False
         else:
-            scenario_json_path = scenario_dir_path /  scenario_name / ".json"
+            scenario_json_path = scenario_dir_path /  ''.join([scenario_name, ".json"])
             if not os.path.exists(scenario_json_path):
                 print("Scenario %s json not found" % scenario_name)
-                return False
+                return None
             else:
                 return scenario_json_path
 
 
     def getScenario(self, scenario_name):
-        
         scenario_json_path = self.scenarioExists(scenario_name)
-        scenario_json = dict()
-        try:
-            with open(scenario_json_path) as json_file:
-                scenario_json = json.load(json_file)
-                return scenario_json
+        if scenario_json_path:
+            try:
+                with open(scenario_json_path) as json_file:
+                    scenario_json = json.load(json_file)
+                    return scenario_json
+            except:
+                print("Something went wrong while retrieving Scenario JSON")
 
-        except:
-            print("Something went wrong while retrieving Scenario JSON")
-
-    
-    def changeScenario(self, scenario_name, new_scenario_json):
+    def editScenario(self, scenario_name , new_scenario):
         scenario_json_path = self.scenarioExists(scenario_name)
-        with open(scenario_json_path, 'w+') as outfile:
-          json.dump(scenario_json_path, outfile)
-
+        if scenario_json_path:
+            with open(scenario_json_path, 'w+') as outfile:
+                outfile.write(json.dumps(new_scenario, indent=3))
+                outfile.close()
+            return True
+        else:
+            return False
 

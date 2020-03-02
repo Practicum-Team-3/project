@@ -7,7 +7,7 @@ class VagrantManager(object):
     def __init__(self):
         self.file_manager = FileManager()
 
-    def get_available_boxes(self):
+    def getAvailableBoxes(self):
         # Variables
         boxes = {}
         boxNum = 0

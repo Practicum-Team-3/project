@@ -1,4 +1,4 @@
-from flask import Flask, jsonify
+from flask import Flask, jsonify, request
 from src.model.ScenarioManager import ScenarioManager
 from src.model.VagrantManager import VagrantManager
 
@@ -7,19 +7,24 @@ scenario_manager = ScenarioManager()
 vagrant_manager = VagrantManager()
 
 @app.route('/scenarios/all')
-def get_scenarios():
-  return jsonify(scenario_manager.get_scenarios())
+def getScenarios():
+  return jsonify(scenario_manager.getScenarios())
 
+@app.route('/scenarios/<scenario_name>')
+def getScenario(scenario_name):
+  return jsonify(scenario_manager.getScenario(scenario_name))
 
-@app.route('/boxes/all')
-def get_available_boxes():
-  return jsonify(vagrant_manager.get_available_boxes())
+@app.route('/scenarios/edit/<scenario_name>', methods = ['POST'])
+def editScenario(scenario_name ):
+  return jsonify(scenario_manager.editScenario(scenario_name ,  request.get_json()))
 
 @app.route('/scenarios/new/<scenario_name>')
-def create_scenario(scenario_name):
-  return jsonify(scenario_manager.create_scenario(scenario_name))
+def createScenario(scenario_name):
+  return jsonify(scenario_manager.createScenario(scenario_name))
+
+@app.route('/boxes/all')
+def getAvailableBoxes():
+  return jsonify(vagrant_manager.getAvailableBoxes())
 
 if __name__=="__main__":
   app.run()
-  
-  
