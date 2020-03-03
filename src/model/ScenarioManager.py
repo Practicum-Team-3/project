@@ -1,31 +1,17 @@
 import os
 import json
-from src.model.FileManager import FileManager
-from src.model.Scenario import Scenario
+from model.FileManager import FileManager
+from model.Scenario import Scenario
 
 class ScenarioManager(object):
 
     def __init__(self):
         self.file_manager = FileManager()
 
-    def createScenario(self, scenario_name):
-        # Variables
-        folders = ["JSON", "Exploit", "Vulnerability", "Machines"]
-        scenario_path = self.file_manager.getScenariosPath() / scenario_name
-        try:
-            os.makedirs(scenario_path)
-        except OSError:
-            print("Creation of the directory %s failed" % scenario_path)
-        else:
-            print("Successfully created the directory %s" % scenario_path)
-        for f in folders:
-            path = scenario_path / f
-            try:
-                os.makedirs(path)
-            except OSError:
-                print("Creation of the directory %s failed" % path)
-            else:
-                print("Successfully created the directory %s" % path)
+    def create_scenario(self, scenario_name):
+        
+        #Folder creation moved to FileManager
+        self.file_manager.createScenarioFolders(scenario_name)
         scenario = Scenario(scenario_name)
         scenario.generateScenario(scenario_name)
         result = {"result": True}
@@ -68,6 +54,12 @@ class ScenarioManager(object):
             with open(scenario_json_path, 'w+') as outfile:
                 outfile.write(json.dumps(new_scenario, indent=3))
                 outfile.close()
+            #THIS IS A PLACEHOLDER
+            #It will try to create the folders every time the scenario is edited
+            #new_scenario_dict = json.loads(new_scenario)
+            if "machines" in new_scenario:
+                if bool(new_scenario["machines"]):
+                    self.file_manager.createMachines(new_scenario)
             return True
         else:
             return False
