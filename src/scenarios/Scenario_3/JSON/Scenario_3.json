@@ -17,6 +17,7 @@
   "machines": {
     "attacker": {
       "os": "laravel/homestead",
+      "name": "attacker",
       "isAttacker": true,
       "shared_folders": [
         "./attackerfiles",
@@ -27,10 +28,12 @@
         "network_type": "type",
         "network_name": "Name",
         "auto_config": "True"
-      }
+      },
+      "gui": false
     },
     "defender": {
       "os": "laravel/homestead",
+      "name": "defender",
       "isAttacker": true,
       "shared_folders": [
         "./attackerfiles",
@@ -41,7 +44,8 @@
         "network_type": "type",
         "network_name": "Name",
         "auto_config": "True"
-      }
+      },
+      "gui": false
     }
   }
 }

@@ -26,5 +26,9 @@ def createScenario(scenario_name):
 def getAvailableBoxes():
   return jsonify(vagrant_manager.getAvailableBoxes())
 
+@app.route('/vagrantFiles/<scenario_name>/all')
+def createVagrantFiles(scenario_name):
+  return jsonify(vagrant_manager.createVagrantFiles(scenario_name))
+
 if __name__=="__main__":
   app.run()

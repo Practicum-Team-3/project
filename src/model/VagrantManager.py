@@ -1,14 +1,25 @@
 import subprocess
 import re
-from model.FileManager import FileManager
+from src.model.FileManager import FileManager
+from src.model.VagrantFile import VagrantFile
+from src.model.ScenarioManager import ScenarioManager
 
 class VagrantManager(object):
 
     def __init__(self):
         self.file_manager = FileManager()
+        self.vagrant_file = VagrantFile()
+        self.scenario_manager = ScenarioManager()
 
-    def createVagrantFiles(self, scenario_json):
-        pass
+    def createVagrantFiles(self, scenario_name):
+        scenario_json = self.scenario_manager.getScenario(scenario_name)
+        self.file_manager.createMachineFolders(scenario_json)
+        for machine_name in scenario_json["machines"]:
+            machine = scenario_json["machines"][machine_name]
+            machine_path = self.file_manager.getScenariosPath() / scenario_name / "Machines" / machine_name
+            self.vagrant_file.vagrantFilePerMachine(machine , machine_path)
+        result = {"result": True}
+        return result
 
     def getAvailableBoxes(self):
         # Variables

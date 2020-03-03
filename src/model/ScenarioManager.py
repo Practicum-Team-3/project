@@ -1,7 +1,7 @@
 import os
 import json
-from model.FileManager import FileManager
-from model.Scenario import Scenario
+from src.model.FileManager import FileManager
+from src.model.Scenario import Scenario
 
 class ScenarioManager(object):
 
@@ -55,9 +55,6 @@ class ScenarioManager(object):
             #THIS IS A PLACEHOLDER
             #It will try to create the folders every time the scenario is edited
             #new_scenario_dict = json.loads(new_scenario)
-            if "machines" in new_scenario:
-                if bool(new_scenario["machines"]):
-                    self.file_manager.createMachines(new_scenario)
             return True
         else:
             return False

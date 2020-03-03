@@ -36,12 +36,12 @@ class FileManager(object):
         result = {"result": True}
         return result
 
-    def createMachines(self, scenario):
+    def createMachineFolders(self, scenario_json):
         #Response message for the requester
         reponse = {"result": True, "reason": ""}
         try:
-            machines = scenario['machines']
-            scenario_name = scenario['scenario_name']
+            machines = scenario_json['machines']
+            scenario_name = scenario_json['scenario_name']
             machine_names = machines.keys()
             machines_path = self.getScenariosPath() / scenario_name / "Machines"
             for machine_name in machine_names:
