@@ -1,0 +1,49 @@
+{
+    "scenario_name": "Scenario_3",
+    "scenario_id": "L<l0F38)",
+    "creation_date": "29/02/2020 16:02:15",
+    "last_accessed": "29/02/2020 16:02:15",
+    "exploit_info": {
+        "name": "test_name",
+        "type": "",
+        "download_link": ""
+    },
+    "vulnerability_info": {
+        "name": "",
+        "type": "",
+        "cve_link": "",
+        "download_link": ""
+    },
+    "machines": {
+        "attacker": {
+            "os": "laravel/homestead",
+            "isAttacker": true,
+            "gui" : true,
+            "shared_folders": [
+            "./attackerfiles",
+            "/sharedfolder"
+            ],
+            "network_settings": {
+                "ip_address": "192.168.50.5",
+                "network_type" : "type", 
+                "network_name" : "Name", 
+                "auto_config" : "True"
+            }
+      },
+      "defender": {
+        "os": "laravel/homestead",
+        "isAttacker": true,
+        "gui" : true,
+        "shared_folders": [
+        "./attackerfiles",
+        "/sharedfolder"
+        ],
+        "network_settings": {
+            "ip_address": "192.168.50.5",
+            "network_type" : "type", 
+            "network_name" : "Name", 
+            "auto_config" : "True"
+        }
+  }
+  }
+}
