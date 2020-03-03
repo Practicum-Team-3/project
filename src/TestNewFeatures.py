@@ -1,5 +1,5 @@
-from src.model.ScenarioManager import ScenarioManager
-from src.model.VagrantManager import VagrantManager
+from model.ScenarioManager import ScenarioManager
+from model.VagrantManager import VagrantManager
 
 if __name__ == "__main__":
     scenario_manager = ScenarioManager()

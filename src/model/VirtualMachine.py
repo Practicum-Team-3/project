@@ -1,5 +1,5 @@
-from src.model.NetworkSettings import NetworkSettings
-from src.model.Provision import Provision
+from model.NetworkSettings import NetworkSettings
+from model.Provision import Provision
 
 
 class VirtualMachine(object):

@@ -1,6 +1,6 @@
 import json
 from pathlib import Path
-from src.model.FileManager import FileManager
+from model.FileManager import FileManager
 
 class VagrantFile(object):   
   def __init__(self):

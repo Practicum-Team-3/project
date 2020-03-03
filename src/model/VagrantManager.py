@@ -1,8 +1,8 @@
 import subprocess
 import re
-from src.model.FileManager import FileManager
-from src.model.VagrantFile import VagrantFile
-from src.model.ScenarioManager import ScenarioManager
+from model.FileManager import FileManager
+from model.VagrantFile import VagrantFile
+from model.ScenarioManager import ScenarioManager
 
 class VagrantManager(object):
 

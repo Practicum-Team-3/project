@@ -1,14 +1,14 @@
 import subprocess
 import json
 from pathlib import Path
-from src.model.VirtualMachine import VirtualMachine as VM
-from src.model.Scenario import Scenario
-from src.model.ExploitInfo import ExploitInfo
-from src.model.VulnerabilityInfo import VulnerabilityInfo
-from src.model.NetworkSettings import NetworkSettings
-from src.model.Provision import Provision
-from src.model.ScenarioManager import ScenarioManager
-from src.model.VagrantFile import VagrantFile
+from model.VirtualMachine import VirtualMachine as VM
+from model.Scenario import Scenario
+from model.ExploitInfo import ExploitInfo
+from model.VulnerabilityInfo import VulnerabilityInfo
+from model.NetworkSettings import NetworkSettings
+from model.Provision import Provision
+from model.ScenarioManager import ScenarioManager
+from model.VagrantFile import VagrantFile
 
 if __name__ == "__main__":
   scenarioManager = ScenarioManager()

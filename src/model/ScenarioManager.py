@@ -1,7 +1,7 @@
 import os
 import json
-from src.model.FileManager import FileManager
-from src.model.Scenario import Scenario
+from model.FileManager import FileManager
+from model.Scenario import Scenario
 
 class ScenarioManager(object):
 
