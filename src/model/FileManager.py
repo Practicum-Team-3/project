@@ -15,26 +15,26 @@ class FileManager(object):
 
     def createScenarioFolders(self, scenario_name):
     # Variables
-    folders = ["JSON", "Exploit", "Vulnerability", "Machines"]
-    scenario_path = self.getScenarioPath() / scenario_name
-    try:
-        os.makedirs(scenario_path)
-    except OSError:
-        print("Creation of the directory %s failed" % scenario_path)
-    else:
-        print("Successfully created the directory %s" % scenario_path)
-    for f in folders:
-        path = scenario_path / f
+        folders = ["JSON", "Exploit", "Vulnerability", "Machines"]
+        scenario_path = self.getScenarioPath() / scenario_name
         try:
-            os.makedirs(path)
+            os.makedirs(scenario_path)
         except OSError:
-            print("Creation of the directory %s failed" % path)
+            print("Creation of the directory %s failed" % scenario_path)
         else:
-            print("Successfully created the directory %s" % path)
-    scenario = Scenario(scenario_name)
-    scenario.generateScenario(scenario_name)
-    result = {"result": True}
-    return result
+            print("Successfully created the directory %s" % scenario_path)
+        for f in folders:
+            path = scenario_path / f
+            try:
+                os.makedirs(path)
+            except OSError:
+                print("Creation of the directory %s failed" % path)
+            else:
+                print("Successfully created the directory %s" % path)
+        scenario = Scenario(scenario_name)
+        scenario.generateScenario(scenario_name)
+        result = {"result": True}
+        return result
 
     def createMachines(self, scenario):
         #Response message for the requester
@@ -47,7 +47,11 @@ class FileManager(object):
 
             for machine_name in machine_names:
                 path = scenario_path / machine_name
-                os.makedirs(path)
+
+                if os.path.isdir(path):
+                    print("Folder already exists")
+                else:
+                    os.makedirs(path)
             
         except KeyError as key_not_found:
             print("%s has not been defined" % key_not_found)
@@ -57,7 +61,7 @@ class FileManager(object):
         except OSError:
             print("Creation of machines directory failed")
             reponse["result"] = False
-            reponse["reason"] = "OS Error"" 
+            reponse["reason"] = "OS Error" 
         else:
             print("Creation of machines directory succesful")
         finally:
