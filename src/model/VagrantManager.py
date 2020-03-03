@@ -1,6 +1,6 @@
 import subprocess
 import re
-from src.model.FileManager import FileManager
+from model.FileManager import FileManager
 
 class VagrantManager(object):
 

@@ -1,11 +1,12 @@
-from src.model.NetworkSettings import NetworkSettings
-from src.model.Provision import Provision
+from model.NetworkSettings import NetworkSettings
+from model.Provision import Provision
 
 
 class VirtualMachine(object):
-  def __init__(self, name, os):
+  def __init__(self, name, os , isAttacker = False):
     self.name = name
     self.os = os
+    self.isAttacker = isAttacker
     self.shared_folders = tuple() #tuples of (hostPath, guestPath)
     self.network_settings = NetworkSettings("" , "" , "" , True)
     self.gui = False
@@ -33,6 +34,7 @@ class VirtualMachine(object):
     vm_dict = dict()
     vm_dict["os"] = self.os
     vm_dict["name"] = self.name
+    vm_dict["isAttacker"] = self.isAttacker
     vm_dict["shared_folders"] = self.shared_folders
     vm_dict["network_settings"] = self.network_settings.dictionary() if self.network_settings else dict()
     vm_dict["provisions"] = self.provision.dictionary() if self.provision else dict()
