@@ -1,4 +1,6 @@
 from pathlib import Path
+import sys
+import os
 
 class FileManager(object):
 
@@ -16,26 +18,26 @@ class FileManager(object):
 
     def createScenarioFolders(self, scenario_name):
         # Variables
-            folders = ["JSON", "Exploit", "Vulnerability", "Machines"]
-            scenario_path = self.getScenarioPath() / scenario_name
+        folders = ["JSON", "Exploit", "Vulnerability", "Machines"]
+        scenario_path = self.getScenarioPath() / scenario_name
+        try:
+            os.makedirs(scenario_path)
+        except OSError:
+            print("Creation of the directory %s failed" % scenario_path)
+        else:
+            print("Successfully created the directory %s" % scenario_path)
+        for f in folders:
+            path = scenario_path / f
             try:
-                os.makedirs(scenario_path)
+                os.makedirs(path)
             except OSError:
-                print("Creation of the directory %s failed" % scenario_path)
+                print("Creation of the directory %s failed" % path)
             else:
-                print("Successfully created the directory %s" % scenario_path)
-            for f in folders:
-                path = scenario_path / f
-                try:
-                    os.makedirs(path)
-                except OSError:
-                    print("Creation of the directory %s failed" % path)
-                else:
-                    print("Successfully created the directory %s" % path)
-            scenario = Scenario(scenario_name)
-            scenario.generateScenario(scenario_name)
-            result = {"result": True}
-            return result
+                print("Successfully created the directory %s" % path)
+        scenario = Scenario(scenario_name)
+        scenario.generateScenario(scenario_name)
+        result = {"result": True}
+        return result
 
     def createMachines(self, scenario):
         #Response message for the requester
@@ -43,9 +45,9 @@ class FileManager(object):
         try:
             machines = scenario['machines']
             scenario_name = scenario['scenario_name']
-            machine_names = machines.getKeys()
-            machines_path = self.getScenarioPath() / scenario_name / "machines"
-
+            machine_names = machines.keys()
+            machines_path = self.getScenariosPath() / scenario_name / "machines"
+            print("BEFORE ITERATION")
             for machine_name in machine_names:
                 path = machines_path / machine_name
 
@@ -63,7 +65,9 @@ class FileManager(object):
             print("Creation of machines directory failed")
             reponse["result"] = False
             reponse["reason"] = "OS Error" 
+        except:
+            print("Unexpected error:", sys.exc_info()[0])
         else:
             print("Creation of machines directory succesful")
-        finally:
-            return reponse
+        
+        return reponse
