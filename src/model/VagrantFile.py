@@ -44,7 +44,7 @@ class VagrantFile(object):
         buffer += "false\n"
     buffer += f'\t\tvb.memory = \"1024\"\n'
     buffer += f"\tend\n"
-    buffer += f"\nend\n"
+    buffer += f"end\n"
 
     print(buffer)
 

@@ -1,3 +1,4 @@
+import os
 import subprocess
 import re
 from model.FileManager import FileManager
@@ -18,6 +19,25 @@ class VagrantManager(object):
             machine = scenario_json["machines"][machine_name]
             machine_path = self.file_manager.getScenariosPath() / scenario_name / "Machines" / machine_name
             self.vagrant_file.vagrantFilePerMachine(machine , machine_path)
+        result = {"result": True}
+        return result
+
+    def runVagrantUp(self, scenario_name):
+        self.createVagrantFiles(scenario_name)
+        scenario_json = self.scenario_manager.getScenario(scenario_name)
+        for machine_name in scenario_json["machines"]:
+            machine_path = self.file_manager.getScenariosPath() / scenario_name / "Machines" / machine_name
+            if not os.path.exists(machine_path):  # Proceed if path exists
+                return
+            os.chdir(machine_path)
+            process = subprocess.Popen(['vagrant', 'up'], stdout=subprocess.PIPE,
+                                       universal_newlines=True)
+            while True:
+                output = process.stdout.readline()
+                if output == '' and process.poll() is not None:
+                    break
+                if output:
+                    print(output.strip())
         result = {"result": True}
         return result
 

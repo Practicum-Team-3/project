@@ -45,12 +45,18 @@ class FileManager(object):
             machine_names = machines.keys()
             machines_path = self.getScenariosPath() / scenario_name / "Machines"
             for machine_name in machine_names:
-                path = machines_path / machine_name
-
-                if os.path.isdir(path):
+                machine_path = machines_path / machine_name
+                machine = scenario_json["machines"][machine_name]
+                if os.path.isdir(machine_path):
                     print("Folder already exists")
                 else:
-                    os.makedirs(path)
+                    os.makedirs(machine_path)
+                shared_folder = machine["shared_folders"][0]
+                shared_folder_path = machine_path / shared_folder
+                if os.path.isdir(shared_folder_path):
+                    print("Shared folder already exists")
+                else:
+                    os.makedirs(shared_folder_path)
             
         except KeyError as key_not_found:
             print("%s has not been defined" % key_not_found)
