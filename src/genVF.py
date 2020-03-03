@@ -1,13 +1,19 @@
 import subprocess
-from src.model.VirtualMachine import VirtualMachine as VM
-from src.model.Scenario import Scenario
-from src.model.ExploitInfo import ExploitInfo
-from src.model.VulnerabilityInfo import VulnerabilityInfo
-from src.model.NetworkSettings import NetworkSettings
-from src.model.Provision import Provision
+import json
+from pathlib import Path
+from model.VirtualMachine import VirtualMachine as VM
+from model.Scenario import Scenario
+from model.ExploitInfo import ExploitInfo
+from model.VulnerabilityInfo import VulnerabilityInfo
+from model.NetworkSettings import NetworkSettings
+from model.Provision import Provision
+from model.ScenarioManager import ScenarioManager
+from model.VagrantFile import VagrantFile
 
 if __name__ == "__main__":
-  attacker = VM("attacker", "laravel/homestead")
+  scenarioManager = ScenarioManager()
+  vagrantFile = VagrantFile()
+  attacker = VM("attacker", "laravel/homestead" , True)
   victim = VM("victim", "laravel/homestead")
   
   #Link any shared folders from host to the VMs
@@ -32,15 +38,22 @@ if __name__ == "__main__":
   attacker.setProvision(provision)
   victim.setProvision(provision)
   
-  #Network settings
-  
   #Prepare Scenario
-  scenario = Scenario("Scenario_1")
+  scenario_name = "Scenario_1"
+  #Create empty scenario
+  scenarioManager.createScenario(scenario_name)
+  #Create custom scenario
+  scenario = Scenario(scenario_name)
   scenario.setExploitInfo(e_info)
   scenario.setVulnerabilityInfo(v_info)
   scenario.addVM(attacker)
   scenario.addVM(victim)
-  scenario.generateScenario()
+  json_name = "".join([scenario_name, ".json"])
+  with open(Path.cwd() / "scenarios" / scenario_name / "JSON" / json_name, 'w') as outfile:
+    json.dump(scenario.dictionary(), outfile)
+  json_string = json.dumps(scenario.dictionary(), indent=2)
+  print(json_string)
+  vagrantFile.vagrantFileCreator(scenario_name)
   
   '''
   #Spin up the VMs

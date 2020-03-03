@@ -1,7 +1,7 @@
 import os
 import json
-from src.model.FileManager import FileManager
-from src.model.Scenario import Scenario
+from model.FileManager import FileManager
+from model.Scenario import Scenario
 
 class ScenarioManager(object):
 
@@ -50,7 +50,6 @@ class ScenarioManager(object):
                 return None
             else:
                 return scenario_json_path
-
 
     def getScenario(self, scenario_name):
         scenario_json_path = self.scenarioExists(scenario_name)

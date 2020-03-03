@@ -1,4 +1,4 @@
-from src.model.ScenarioManager import ScenarioManager
+from model.ScenarioManager import ScenarioManager
 import json
 import os
 
