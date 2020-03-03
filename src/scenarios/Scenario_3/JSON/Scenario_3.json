@@ -34,7 +34,7 @@
     "defender": {
       "os": "laravel/homestead",
       "name": "defender",
-      "isAttacker": true,
+      "isAttacker": false,
       "shared_folders": [
         "./attackerfiles",
         "/sharedfolder"
