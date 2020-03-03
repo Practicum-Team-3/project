@@ -1,6 +1,6 @@
 from flask import Flask, jsonify, request
-from model.ScenarioManager import ScenarioManager
-from model.VagrantManager import VagrantManager
+from src.model.ScenarioManager import ScenarioManager
+from src.model.VagrantManager import VagrantManager
 
 app = Flask(__name__)
 scenario_manager = ScenarioManager()

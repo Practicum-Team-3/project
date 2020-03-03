@@ -1,25 +1,24 @@
-from pathlib import Path
 import sys
 import os
+from pathlib import Path
 
 class FileManager(object):
 
     def __init__(self):
         #Paths
         self.current_path = Path.cwd()
-        self.scenarios_path = self.current_path / "src" / "scenarios"
+        self.scenarios_path = self.current_path / "scenarios"
 
     def getCurrentPath(self):
         return self.current_path
 
     def getScenariosPath(self):
-        print(self.scenarios_path)
         return self.scenarios_path
 
     def createScenarioFolders(self, scenario_name):
         # Variables
         folders = ["JSON", "Exploit", "Vulnerability", "Machines"]
-        scenario_path = self.getScenarioPath() / scenario_name
+        scenario_path = self.getScenariosPath() / scenario_name
         try:
             os.makedirs(scenario_path)
         except OSError:
@@ -34,8 +33,6 @@ class FileManager(object):
                 print("Creation of the directory %s failed" % path)
             else:
                 print("Successfully created the directory %s" % path)
-        scenario = Scenario(scenario_name)
-        scenario.generateScenario(scenario_name)
         result = {"result": True}
         return result
 
@@ -46,8 +43,7 @@ class FileManager(object):
             machines = scenario['machines']
             scenario_name = scenario['scenario_name']
             machine_names = machines.keys()
-            machines_path = self.getScenariosPath() / scenario_name / "machines"
-            print("BEFORE ITERATION")
+            machines_path = self.getScenariosPath() / scenario_name / "Machines"
             for machine_name in machine_names:
                 path = machines_path / machine_name
 

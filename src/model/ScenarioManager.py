@@ -1,15 +1,14 @@
 import os
 import json
-from model.FileManager import FileManager
-from model.Scenario import Scenario
+from src.model.FileManager import FileManager
+from src.model.Scenario import Scenario
 
 class ScenarioManager(object):
 
     def __init__(self):
         self.file_manager = FileManager()
 
-    def create_scenario(self, scenario_name):
-        
+    def createScenario(self, scenario_name):
         #Folder creation moved to FileManager
         self.file_manager.createScenarioFolders(scenario_name)
         scenario = Scenario(scenario_name)
@@ -52,7 +51,7 @@ class ScenarioManager(object):
         scenario_json_path = self.scenarioExists(scenario_name)
         if scenario_json_path:
             with open(scenario_json_path, 'w+') as outfile:
-                outfile.write(json.dumps(new_scenario, indent=3))
+                outfile.write(json.dumps(new_scenario, indent=2))
                 outfile.close()
             #THIS IS A PLACEHOLDER
             #It will try to create the folders every time the scenario is edited

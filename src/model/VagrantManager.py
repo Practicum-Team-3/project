@@ -1,11 +1,14 @@
 import subprocess
 import re
-from model.FileManager import FileManager
+from src.model.FileManager import FileManager
 
 class VagrantManager(object):
 
     def __init__(self):
         self.file_manager = FileManager()
+
+    def createVagrantFiles(self, scenario_json):
+        pass
 
     def getAvailableBoxes(self):
         # Variables
