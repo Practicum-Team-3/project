@@ -14,12 +14,14 @@ class VagrantFile(object):
     buffer = f"Vagrant.configure(\"2\") do |config|\n"
     #Machines
     buffer += f'\tconfig.vm.define "{machine["name"]}" do |{machine["name"]}|\n'
+    #This will help identify the vm inside the vagrant environment
+    buffer += f'\t\t{machine["name"]}.vm.hostname = "{machine["name"]}"\n'
     buffer += f'\t\t{machine["name"]}.vm.box = "{machine["os"]}"\n'
 
     #setup static ip
     if machine["network_settings"]["ip_address"]:
         network_settings = machine["network_settings"]
-        buffer += f'\t\t{machine["name"]}.vm.network \"private_network\", ip: \"{network_settings["ip_address"]}\"\n'
+        buffer += f'\t\t{machine["name"]}.vm.network \"private_network\", ip: \"{network_settings["ip_address"]}\", virtualbox__intnet: true\n'
 
     #setup synced folders
     if machine["shared_folders"] != None:
@@ -37,6 +39,8 @@ class VagrantFile(object):
     buffer += f'\tend\n'
     #GUI
     buffer += f"\tconfig.vm.provider \"virtualbox\" do |vb|\n"
+    #Added to show machine name in virtualbox
+    buffer += f'\t\tvb.name = \"{machine["name"]}\"\n'
     buffer += f"\t\tvb.gui = "
     if machine["gui"]:
         buffer += "true\n"
