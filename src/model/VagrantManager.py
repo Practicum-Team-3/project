@@ -28,7 +28,7 @@ class VagrantManager(object):
             if not os.path.exists(machine_path):  # Proceed if path exists
                 return
             os.chdir(machine_path)
-            process = subprocess.Popen(['cmd', '/C', 'vagrant', 'up'], stdout=subprocess.PIPE,
+            process = subprocess.Popen(['vagrant', 'up'], stdout=subprocess.PIPE,
                                        universal_newlines=True)
             while True:
                 output = process.stdout.readline()
