@@ -1,5 +1,4 @@
-from model.NetworkSettings import NetworkSettings
-from model.Provision import Provision
+from model import NetworkSettings, Provision
 
 
 class VirtualMachine(object):
