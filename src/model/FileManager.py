@@ -7,7 +7,7 @@ class FileManager(object):
     def __init__(self):
         #Paths
         self.current_path = Path.cwd()
-        self.scenarios_path = self.current_path / "scenarios"
+        self.scenarios_path = self.current_path / "src" /"scenarios"
 
     def getCurrentPath(self):
         return self.current_path

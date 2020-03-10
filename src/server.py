@@ -66,5 +66,11 @@ def runVagrantUp(scenario_name):
   """
   return jsonify(vagrant_manager.runVagrantUp(scenario_name))
 
+@app.route('/scenarios/<scenario_name>/ping/<source>/<destination>')
+def testPing(scenario_name, source, destination):
+  return jsonify(vagrant_manager.testNetworkPing(scenario_name, source, destination))
+
+
+
 if __name__=="__main__":
   app.run()
