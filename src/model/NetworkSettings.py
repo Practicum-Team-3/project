@@ -6,6 +6,10 @@ class NetworkSettings(object):
         self.auto_config = auto_config
         
     def dictionary(self):
+        """
+        Generates a dictionary for the NetworkSettings object
+        :return: A dictionary with NetworkSettings data
+        """
         n_dict = dict()
         n_dict["network_name"] = self.network_name
         n_dict["network_type"] = self.network_type

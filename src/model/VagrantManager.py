@@ -11,16 +11,26 @@ class VagrantManager(object):
         self.scenario_manager = ScenarioManager()
 
     def createVagrantFiles(self, scenario_name):
+        """
+        Creates a vagrant file per machine in a scenario
+        :param scenario_name: String with the scenario name
+        :return: True if vagrant files were successfully created
+        """
         scenario_json = self.scenario_manager.getScenario(scenario_name)
         self.file_manager.createMachineFolders(scenario_json)
         for machine_name in scenario_json["machines"]:
             machine = scenario_json["machines"][machine_name]
             machine_path = self.file_manager.getScenariosPath() / scenario_name / "Machines" / machine_name
-            self.vagrant_file.vagrantFilePerMachine(machine , machine_path)
+            print(self.vagrant_file.vagrantFilePerMachine(machine , machine_path))
         result = {"result": True}
         return result
 
     def runVagrantUp(self, scenario_name):
+        """
+        Executes the vagrant up command for each machine in the scenario
+        :param scenario_name: String with the scenario name
+        :return: True if the vagrant up commands were successfully executed
+        """
         self.createVagrantFiles(scenario_name)
         scenario_json = self.scenario_manager.getScenario(scenario_name)
         for machine_name in scenario_json["machines"]:
@@ -108,6 +118,10 @@ class VagrantManager(object):
 
 
     def getAvailableBoxes(self):
+        """
+        Gets the available boxes in the Vagrant context
+        :return: A list of string with the available boxes
+        """
         # Variables
         boxes = {}
         boxNum = 0

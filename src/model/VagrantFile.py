@@ -1,10 +1,16 @@
-from model import FileManager
+from model.FileManager import FileManager
 
 class VagrantFile(object):   
   def __init__(self):
     self.file_manager = FileManager()
 
   def vagrantFilePerMachine(self , machine , machine_path):
+    """
+    Creates a vagrant file for this machine
+    :param machine: Object which carries the virtual machine data
+    :param machine_path: Folder path to this machine
+    :return: String used to write the vagrant file
+    """
     buffer = ""
     machine_vagrant_file_path = machine_path / "Vagrantfile"
     file = open(machine_vagrant_file_path, "w")
@@ -48,8 +54,6 @@ class VagrantFile(object):
     buffer += f"\tend\n"
     buffer += f"end\n"
 
-    print(buffer)
-
     file.write(buffer)
     file.close()
-    return
+    return buffer
