@@ -69,6 +69,13 @@ def runVagrantUp(scenario_name):
 
 @app.route('/scenarios/<scenario_name>/ping/<source>/<destination>')
 def testPing(scenario_name, source, destination):
+  """
+  Tests network connectivity between two virtual machines
+  :param scenario_name: String with the scenario name
+  :param source: Source virtual machine
+  :param destination: Destination virtual machine
+  :return:
+  """
   return jsonify(vagrant_manager.testNetworkPing(scenario_name, source, destination))
 
 if __name__=="__main__":
