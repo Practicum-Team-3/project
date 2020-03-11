@@ -35,7 +35,7 @@ def editScenario(scenario_name ):
 @app.route('/scenarios/new/<scenario_name>')
 def createScenario(scenario_name):
   """
-  Create a new scenario as well as the folders for that scenario
+  Creates a new scenario which includes the folders and the scenario JSON file
   :param scenario_name: String with the scenario name
   :return: True if the new scenario was successfully created
   """
@@ -53,7 +53,7 @@ def getAvailableBoxes():
 def createVagrantFiles(scenario_name):
   """
   Create the vagrant files for the existing machines in the scenario
-  :param scenario_name: String with the sceanrio name
+  :param scenario_name: String with the scenario name
   :return: True if the files were successfully created
   """
   return jsonify(vagrant_manager.createVagrantFiles(scenario_name))
@@ -62,7 +62,7 @@ def createVagrantFiles(scenario_name):
 def runVagrantUp(scenario_name):
   """
   Executes the vagrant up command for each machine in the scenario
-  :param scenario_name:
+  :param scenario_name: String with the scenario name
   :return: True if the vagrant up commands were successfully executed
   """
   return jsonify(vagrant_manager.runVagrantUp(scenario_name))

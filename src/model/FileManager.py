@@ -3,19 +3,31 @@ import os
 from pathlib import Path
 
 class FileManager(object):
-
     def __init__(self):
         #Paths
         self.current_path = Path.cwd()
         self.scenarios_path = self.current_path / "scenarios"
 
     def getCurrentPath(self):
+        """
+        Gets the project folder path
+        :return: String with the project path
+        """
         return self.current_path
 
     def getScenariosPath(self):
+        """
+        Gets the scenarios folder path
+        :return: String with the scenarios project path
+        """
         return self.scenarios_path
 
     def createScenarioFolders(self, scenario_name):
+        """
+        Creates a scenario folder with the JSON, Exploit, Vulnerability and Machines subfolders
+        :param scenario_name: String with the scenario name
+        :return: True if the scenario is created successfully
+        """
         # Variables
         folders = ["JSON", "Exploit", "Vulnerability", "Machines"]
         scenario_path = self.getScenariosPath() / scenario_name
@@ -37,8 +49,13 @@ class FileManager(object):
         return result
 
     def createMachineFolders(self, scenario_json):
+        """
+        Creates a folder for each machine in the scenario
+        :param scenario_json: String with the scenario name
+        :return: True if machine folders are created successfully
+        """
         #Response message for the requester
-        reponse = {"result": True, "reason": ""}
+        response = {"result": True, "reason": ""}
         try:
             machines = scenario_json['machines']
             scenario_name = scenario_json['scenario_name']
@@ -60,16 +77,16 @@ class FileManager(object):
             
         except KeyError as key_not_found:
             print("%s has not been defined" % key_not_found)
-            reponse["result"] = False
-            reponse["reason"] = key_not_found + " has not been defined" 
+            response["result"] = False
+            response["reason"] = key_not_found + " has not been defined"
 
         except OSError:
             print("Creation of machines directory failed")
-            reponse["result"] = False
-            reponse["reason"] = "OS Error" 
+            response["result"] = False
+            response["reason"] = "OS Error"
         except:
             print("Unexpected error:", sys.exc_info()[0])
         else:
             print("Creation of machines directory succesful")
         
-        return reponse
+        return response

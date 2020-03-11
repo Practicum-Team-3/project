@@ -14,14 +14,14 @@
 #
 import os
 import sys
-sys.path.insert(0, os.path.abspath('../src'))
+sys.path.insert(0, os.path.abspath('../src/'))
 
 
 # -- Project information -----------------------------------------------------
 
 project = u'Automated Malware and Exploit Data Collection Tool'
-copyright = u'2020, Practicum Team 3'
-author = u'Practicum Team 3'
+copyright = u'2020, Software Practicum Team 3'
+author = u'Software Practicum Team 3'
 
 # The short X.Y version
 version = u''
@@ -41,6 +41,7 @@ release = u'1'
 extensions = [
     'sphinx.ext.autodoc',
     'sphinx.ext.coverage',
+    'sphinx.ext.viewcode',
 ]
 
 # Add any paths that contain templates here, relative to this directory.
@@ -76,7 +77,7 @@ pygments_style = None
 # The theme to use for HTML and HTML Help pages.  See the documentation for
 # a list of builtin themes.
 #
-html_theme = 'default'
+html_theme = 'sphinx_rtd_theme'
 
 # Theme options are theme-specific and customize the look and feel of a theme
 # further.  For a list of options available for each theme, see the
@@ -131,7 +132,7 @@ latex_elements = {
 #  author, documentclass [howto, manual, or own class]).
 latex_documents = [
     (master_doc, 'AutomatedMalwareandExploitDataCollectionTool.tex', u'Automated Malware and Exploit Data Collection Tool Documentation',
-     u'Practicum Team 3', 'manual'),
+     u'Software Practicum Team 3', 'manual'),
 ]
 
 

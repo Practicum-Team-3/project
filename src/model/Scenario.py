@@ -20,15 +20,31 @@ class Scenario(object):
         self.machines = dict()
 
     def setExploitInfo(self , exploit_info):
+        """
+        Sets the exploit info for this scenario
+        :param exploit_info: Object which carries the exploit info
+        """
         self.exploit_info = exploit_info
     
     def setVulnerabilityInfo(self , vulnerability_info):
+        """
+        Sets the vulnerability info for this scenario
+        :param vulnerability_info: Object which carries the vulnerability info
+        """
         self.vulnerability_info = vulnerability_info
         
     def addVM(self, vm):
+        """
+        Adds a new virtual machine to this scenario
+        :param vm: Object which carries the virtual machine data
+        """
         self.machines[vm.name] = vm
 
     def dictionary(self):
+        """
+        Generates a dictionary for the Scenario object
+        :return: A dictionary with Scenario data
+        """
         scenario_dict = dict()
         scenario_dict["scenario_name"] = self.scenario_name
         scenario_dict["scenario_id"] = self.scenario_id
@@ -42,6 +58,11 @@ class Scenario(object):
         return scenario_dict
     
     def generateScenario(self, scenario_name):
+        """
+        Generates a scenario JSON file
+        :param scenario_name: String with the scenario name
+        :return: JSON file containing all the scenario data
+        """
         json_dict = self.dictionary()
         json_name = self.scenario_name + ".json"
         with open(self.file_manager.getScenariosPath() / scenario_name / "JSON" / json_name, 'w') as outfile:

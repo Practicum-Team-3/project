@@ -9,6 +9,11 @@ class ScenarioManager(object):
         self.file_manager = FileManager()
 
     def createScenario(self, scenario_name):
+        """
+        Creates a new scenario which includes the folders and the scenario JSON file
+        :param scenario_name: String with the scenario name
+        :return: True if the new scenario was successfully created
+        """
         #Folder creation moved to FileManager
         self.file_manager.createScenarioFolders(scenario_name)
         scenario = Scenario(scenario_name)
@@ -17,13 +22,21 @@ class ScenarioManager(object):
         return result
 
     def getScenarios(self):
+        """
+        Gets the available scenarios
+        :return: A list of strings with the available scenarios
+        """
         # Variables
         scenarios = os.listdir(self.file_manager.getScenariosPath())
         scenarios_dict = {"scenarios": scenarios}
         return scenarios_dict
 
-
     def scenarioExists(self, scenario_name):
+        """
+        Check if a scenario exists
+        :param scenario_name: String with the scenario name
+        :return: False if the scenario JSON file does not exist and the path to the JSON file if it exist
+        """
         scenario_dir_path = self.file_manager.getScenariosPath() / scenario_name / "JSON"
         if not os.path.isdir(scenario_dir_path):
             print("Scenario %s directory not found" % scenario_name)
@@ -37,6 +50,11 @@ class ScenarioManager(object):
                 return scenario_json_path
 
     def getScenario(self, scenario_name):
+        """
+        Gets the scenario as a JSON file
+        :param scenario_name: String with the scenario name
+        :return: JSON file with the scenario info
+        """
         scenario_json_path = self.scenarioExists(scenario_name)
         if scenario_json_path:
             try:
@@ -47,6 +65,12 @@ class ScenarioManager(object):
                 print("Something went wrong while retrieving Scenario JSON")
 
     def editScenario(self, scenario_name , new_scenario):
+        """
+        Edits a current scenario with a JSON file
+        :param scenario_name: String with the scenario name
+        :param new_scenario: JSON file with the new scenario
+        :return: True if the scenario has been successfully edited, otherwise False
+        """
         scenario_json_path = self.scenarioExists(scenario_name)
         if scenario_json_path:
             with open(scenario_json_path, 'w+') as outfile:
