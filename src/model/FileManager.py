@@ -2,11 +2,11 @@ import sys
 import os
 from pathlib import Path
 
-class FileManager(object):
+class FileManager():
     def __init__(self):
         #Paths
         self.current_path = Path.cwd()
-        self.scenarios_path = self.current_path / "src" /"scenarios"
+        self.scenarios_path = self.current_path /"scenarios"
 
     def getCurrentPath(self):
         """
@@ -21,6 +21,9 @@ class FileManager(object):
         :return: String with the scenarios project path
         """
         return self.scenarios_path
+
+    def getJSONPath(self, scenario_name):
+        return self.scenarios_path / scenario_name / "JSON"
 
     def createScenarioFolders(self, scenario_name):
         """

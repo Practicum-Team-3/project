@@ -1,11 +1,23 @@
 import os
 import json
-from model import FileManager, Scenario
+from .FileManager import FileManager
+from .Scenario import Scenario
 
-class ScenarioManager(object):
+class ScenarioManager():
 
     def __init__(self):
         self.file_manager = FileManager()
+        self.scenarios_dict = self._initializeScenarios()
+
+    def _initializeScenarios(self):
+        # Variables
+        scenarios_dict = dict()
+        scenarios = os.listdir(self.file_manager.getScenariosPath())
+        for scenario_name in scenarios:
+            scenario = Scenario(scenario_name)
+            scenario.scenarioFromJSON()
+            scenarios_dict[scenario_name] = scenario
+        return scenarios_dict
 
     def createScenario(self, scenario_name):
         """
@@ -26,9 +38,7 @@ class ScenarioManager(object):
         :return: A list of strings with the available scenarios
         """
         # Variables
-        scenarios = os.listdir(self.file_manager.getScenariosPath())
-        scenarios_dict = {"scenarios": scenarios}
-        return scenarios_dict
+        return [scenario for scenario in self.scenarios_dict]
 
     def scenarioExists(self, scenario_name):
         """
@@ -36,7 +46,8 @@ class ScenarioManager(object):
         :param scenario_name: String with the scenario name
         :return: False if the scenario JSON file does not exist and the path to the JSON file if it exist
         """
-        scenario_dir_path = self.file_manager.getScenariosPath() / scenario_name / "JSON"
+        scenario_dir_path = self.file_manager.getJSONPath(scenario_name)
+
         if not os.path.isdir(scenario_dir_path):
             print("Scenario %s directory not found" % scenario_name)
             return False
