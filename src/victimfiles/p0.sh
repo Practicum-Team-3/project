@@ -1,1 +1,0 @@
-echo "Vulnerable program installed!!!"

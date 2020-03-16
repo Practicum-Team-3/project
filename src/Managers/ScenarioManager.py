@@ -1,8 +1,9 @@
 import os
 import json
-from model import FileManager, Scenario
+from . import FileManager
+from ..Entities import Scenario
 
-class ScenarioManager(object):
+class ScenarioManager():
 
     def __init__(self):
         self.file_manager = FileManager()

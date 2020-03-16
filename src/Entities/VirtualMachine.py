@@ -1,4 +1,5 @@
-from model import NetworkSettings, Provision
+from . import NetworkSettings
+from . import Provision
 
 class VirtualMachine(object):
   def __init__(self, name, os , is_attacker = False):

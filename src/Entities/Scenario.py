@@ -1,7 +1,9 @@
 import json
 from unique_id import get_unique_id
 from datetime import datetime
-from model import ExploitInfo, FileManager, VulnerabilityInfo
+from . import ExploitInfo
+from . import VulnerabilityInfo
+from ..Managers import FileManager
 
 class Scenario(object):
 

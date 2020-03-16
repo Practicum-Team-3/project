@@ -1,37 +1,39 @@
 import os
 import subprocess
 import re
-from model import FileManager, VagrantFile, ScenarioManager
+from . import FileManager
+from ..Entities import VagrantFile
 
 class VagrantManager(object):
 
     def __init__(self):
         self.file_manager = FileManager()
         self.vagrant_file = VagrantFile()
-        self.scenario_manager = ScenarioManager()
 
-    def createVagrantFiles(self, scenario_name):
+    def createVagrantFiles(self, scenario_json):
         """
         Creates a vagrant file per machine in a scenario
         :param scenario_name: String with the scenario name
         :return: True if vagrant files were successfully created
         """
-        scenario_json = self.scenario_manager.getScenario(scenario_name)
-        self.file_manager.createMachineFolders(scenario_json)
+        scenario_name = scenario_json["scenario_name"]
+        self.file_manager.createMachineFolders(scenario_name)
         for machine_name in scenario_json["machines"]:
+            scenario_name = scenario_json["scenario_name"]
             machine = scenario_json["machines"][machine_name]
             machine_path = self.file_manager.getScenariosPath() / scenario_name / "Machines" / machine_name
             print(self.vagrant_file.vagrantFilePerMachine(machine , machine_path))
         result = {"result": True}
         return result
 
-    def runVagrantUp(self, scenario_name):
+    def runVagrantUp(self, scenario_json):
         """
         Executes the vagrant up command for each machine in the scenario
         :param scenario_name: String with the scenario name
         :return: True if the vagrant up commands were successfully executed
         """
-        self.createVagrantFiles(scenario_name)
+        scenario_name = scenario_json["scenario_name"]
+        self.createVagrantFiles(scenario_json)
         scenario_json = self.scenario_manager.getScenario(scenario_name)
         for machine_name in scenario_json["machines"]:
             machine_path = self.file_manager.getScenariosPath() / scenario_name / "Machines" / machine_name

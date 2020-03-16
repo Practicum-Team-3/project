@@ -1,47 +1,10 @@
 from flask import Flask, jsonify, request
-from model.ScenarioManager import ScenarioManager
-from model.VagrantManager import VagrantManager
+from src.Managers import VagrantManager
 
 app = Flask(__name__)
-scenario_manager = ScenarioManager()
 vagrant_manager = VagrantManager()
 
-@app.route('/scenarios/all')
-def getScenarios():
-  """
-  Gets the available scenarios
-  :return: A list of strings with the available scenarios
-  """
-  return jsonify(scenario_manager.getScenarios())
-
-@app.route('/scenarios/<scenario_name>')
-def getScenario(scenario_name):
-  """
-  Gets the scenario as a JSON file
-  :param scenario_name: String with the scenario name
-  :return: JSON file with the scenario info
-  """
-  return jsonify(scenario_manager.getScenario(scenario_name))
-
-@app.route('/scenarios/edit/<scenario_name>', methods = ['POST'])
-def editScenario(scenario_name ):
-  """
-  Edits a current scenario with a JSON file
-  :param scenario_name: String with the scenario name
-  :return: True if the scenario has been successfully edited, otherwise False
-  """
-  return jsonify(scenario_manager.editScenario(scenario_name ,  request.get_json()))
-
-@app.route('/scenarios/new/<scenario_name>')
-def createScenario(scenario_name):
-  """
-  Creates a new scenario which includes the folders and the scenario JSON file
-  :param scenario_name: String with the scenario name
-  :return: True if the new scenario was successfully created
-  """
-  return jsonify(scenario_manager.createScenario(scenario_name))
-
-@app.route('/boxes/all')
+@app.route('/boxes/getAll')
 def getAvailableBoxes():
   """
   Gets the available boxes in the Vagrant context
@@ -79,4 +42,4 @@ def testPing(scenario_name, source, destination):
   return jsonify(vagrant_manager.testNetworkPing(scenario_name, source, destination))
 
 if __name__=="__main__":
-  app.run()
+  app.run(port=6000)
