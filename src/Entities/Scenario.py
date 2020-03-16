@@ -3,7 +3,7 @@ from unique_id import get_unique_id
 from datetime import datetime
 from . import ExploitInfo
 from . import VulnerabilityInfo
-from ..Managers import FileManager
+from Managers import FileManager
 
 class Scenario(object):
 

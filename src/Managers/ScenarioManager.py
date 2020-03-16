@@ -1,9 +1,9 @@
 import os
 import json
-from . import FileManager
-from ..Entities import Scenario
+from .FileManager import FileManager
+from Entities.Scenario import Scenario
 
-class ScenarioManager():
+class ScenarioManager(object):
 
     def __init__(self):
         self.file_manager = FileManager()
@@ -64,17 +64,18 @@ class ScenarioManager():
             except:
                 print("Something went wrong while retrieving Scenario JSON")
 
-    def editScenario(self, scenario_name , new_scenario):
+    def editScenario(self, scenario_json):
         """
         Edits a current scenario with a JSON file
         :param scenario_name: String with the scenario name
-        :param new_scenario: JSON file with the new scenario
+        :param scenario_json: JSON file with the new scenario
         :return: True if the scenario has been successfully edited, otherwise False
         """
+        scenario_name = scenario_json["scenario_name"]
         scenario_json_path = self.scenarioExists(scenario_name)
         if scenario_json_path:
             with open(scenario_json_path, 'w+') as outfile:
-                outfile.write(json.dumps(new_scenario, indent=2))
+                outfile.write(json.dumps(scenario_json, indent=2))
                 outfile.close()
             #THIS IS A PLACEHOLDER
             #It will try to create the folders every time the scenario is edited

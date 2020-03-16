@@ -1,10 +1,10 @@
 from flask import Flask, jsonify, request
-from src.Managers import VagrantManager
+from Managers import VagrantManager
 
 app = Flask(__name__)
 vagrant_manager = VagrantManager()
 
-@app.route('/boxes/getAll')
+@app.route('/vagrant/boxes/all')
 def getAvailableBoxes():
   """
   Gets the available boxes in the Vagrant context
@@ -12,7 +12,7 @@ def getAvailableBoxes():
   """
   return jsonify(vagrant_manager.getAvailableBoxes())
 
-@app.route('/vagrantFiles/<scenario_name>/all')
+@app.route('/vagrant/<scenario_name>/all')
 def createVagrantFiles(scenario_name):
   """
   Create the vagrant files for the existing machines in the scenario
@@ -21,7 +21,7 @@ def createVagrantFiles(scenario_name):
   """
   return jsonify(vagrant_manager.createVagrantFiles(scenario_name))
 
-@app.route('/vagrantFiles/<scenario_name>/run')
+@app.route('/vagrant/<scenario_name>/run')
 def runVagrantUp(scenario_name):
   """
   Executes the vagrant up command for each machine in the scenario
@@ -30,7 +30,7 @@ def runVagrantUp(scenario_name):
   """
   return jsonify(vagrant_manager.runVagrantUp(scenario_name))
 
-@app.route('/scenarios/<scenario_name>/ping/<source>/<destination>')
+@app.route('/vagrant/<scenario_name>/ping/<source>/<destination>')
 def testPing(scenario_name, source, destination):
   """
   Tests network connectivity between two virtual machines

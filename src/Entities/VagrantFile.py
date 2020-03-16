@@ -1,4 +1,4 @@
-from ..Managers import FileManager
+from Managers import FileManager
 
 class VagrantFile(object):   
   def __init__(self):
