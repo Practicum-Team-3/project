@@ -5,6 +5,16 @@ from Managers.ScenarioManager import ScenarioManager
 app = Flask(__name__)
 scenario_manager = ScenarioManager()
 vserver_ip_address = "http://127.0.0.1:6000/"
+
+@app.route('/scenarios/newEmpty/<scenario_name>')
+def createScenario(scenario_name):
+  """
+  Creates a new scenario which includes the folders and the scenario JSON file
+  :param scenario_name: String with the scenario name
+  :return: True if the new scenario was successfully created
+  """
+  return jsonify(scenario_manager.newEmptyScenario(scenario_name))
+
 @app.route('/scenarios/all')
 def getScenarios():
   """
@@ -31,14 +41,14 @@ def editScenario():
   """
   return jsonify(scenario_manager.editScenario(request.get_json()))
 
-@app.route('/scenarios/new/<scenario_name>')
-def createScenario(scenario_name):
+@app.route('/scenarios/delete/<scenario_name>')
+def deleteScenario(scenario_name):
   """
-  Creates a new scenario which includes the folders and the scenario JSON file
+  Edits a current scenario with a JSON file
   :param scenario_name: String with the scenario name
-  :return: True if the new scenario was successfully created
+  :return: True if the scenario has been successfully edited, otherwise False
   """
-  return jsonify(scenario_manager.createScenario(scenario_name))
+  return jsonify(scenario_manager.deleteScenario(scenario_name))
 
 @app.route('/vagrant/boxes/all')
 def getAvailableBoxes():

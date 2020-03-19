@@ -22,6 +22,9 @@ class FileManager(object):
         """
         return self.scenarios_path
 
+    def getJSONPath(self, scenario_name):
+        return self.scenarios_path / scenario_name / "JSON"
+
     def createScenarioFolders(self, scenario_name):
         """
         Creates a scenario folder with the JSON, Exploit, Vulnerability and Machines subfolders
