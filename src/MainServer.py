@@ -15,6 +15,14 @@ def createScenario(scenario_name):
   """
   return jsonify(scenario_manager.newEmptyScenario(scenario_name))
 
+@app.route('/scenarios/names/all')
+def getScenariosNames():
+  """
+  Gets the available scenarios
+  :return: A list of strings with the available scenarios
+  """
+  return jsonify(scenario_manager.getScenarioNames())
+
 @app.route('/scenarios/all')
 def getScenarios():
   """

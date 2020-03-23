@@ -38,13 +38,23 @@ class ScenarioManager(object):
         else:
             return {"Response": False, "Note": "Scenario already exist" , "Body": dict()}
 
-    def getScenarios(self):
+    def getScenarioNames(self):
         """
         Gets the available scenarios
         :return: A list of strings with the available scenarios
         """
         # Variables
         scenarios_dict = {"scenarios": [self.scenarios_dict[s].scenario_name for s in self.scenarios_dict]}
+        return {"Response": True, "Note": "Operation successful",
+                "Body": scenarios_dict}
+
+    def getScenarios(self):
+        """
+        Gets the available scenarios
+        :return: A list of strings with the available scenarios
+        """
+        # Variables
+        scenarios_dict = {"scenarios": [self.scenarios_dict[s] for s in self.scenarios_dict]}
         return {"Response": True, "Note": "Operation successful",
                 "Body": scenarios_dict}
 
