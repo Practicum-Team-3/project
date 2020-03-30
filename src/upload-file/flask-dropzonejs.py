@@ -8,6 +8,7 @@ app = Flask(__name__)
 UPLOAD_PATH = 'static/uploads'
 APP_ROOT = os.path.dirname(os.path.abspath(__file__))
 UPLOAD_FOLDER = os.path.join(APP_ROOT, UPLOAD_PATH)
+UPLOAD_F = os.path.abspath(os.path.join(APP_ROOT, os.pardir))
 
 #TODO: Handle VagrantFiles, VMs, exploits (zip, 7z, etc.) or just everything?
 #TODO: get existing files??
@@ -28,18 +29,29 @@ def index():
     return render_template('index.html', **locals());
 
 
-# 符合圖片檔案
+# 
 def isVMFormat(link):
     if (link.find('.ova') > -1):
         return True;
     return False;
 
+def isExploitFormat(link):
+    if (link.find('.zip') > -1):
+        return True;
+    return False;
+
+#TODO: This method
+def isVagrantFileFormat(link):
+    if (link.find('.ova') > -1):
+        return True;
+    return False;
 
 @app.route('/upload', methods=['GET', 'POST'])
 def upload():
     if request.method == 'POST':
         file = request.files['file']
-        upload_path = '{}/{}'.format(UPLOAD_FOLDER, file.filename)
+        upload_path = '{}/{}'.format(UPLOAD_FOLDER, secure_filename(file.filename))
+        print(UPLOAD_F)
         file.save(upload_path)
         return 'ok'
 
