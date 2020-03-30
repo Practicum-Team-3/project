@@ -1,57 +1,45 @@
-from flask import Flask, render_template, request
-from werkzeug import secure_filename
-import os
+# -*- coding: utf-8 -*-
+"""
+Created on Mon Mar 30 16:47:34 2020
 
-""" Modified from https://github.com/twtrubiks/flask-dropzone-wavesurfer"""
+@author: revil0mg
+"""
+
+from flask import Flask, render_template, request
+import os
 
 app = Flask(__name__)
 UPLOAD_PATH = 'static/uploads'
 APP_ROOT = os.path.dirname(os.path.abspath(__file__))
 UPLOAD_FOLDER = os.path.join(APP_ROOT, UPLOAD_PATH)
-UPLOAD_F = os.path.abspath(os.path.join(APP_ROOT, os.pardir))
 
-#TODO: Handle VagrantFiles, VMs, exploits (zip, 7z, etc.) or just everything?
-#TODO: get existing files??
-#TODO: Set appropiate paths to files. 
-#TODO: See what the scope of what I need to do is.
 
 @app.route('/')
 def index():
-    all_VMs = []
+    all_image_files = []
     all_mp3_files = []
     for filename in os.listdir(UPLOAD_FOLDER):
-        ## Check for VMs
-        if (isVMFormat(filename)):
-            all_VMs.append(filename)
+        ## 圖片檔
+        if (isImageFormat(filename)):
+            all_image_files.append(filename)
         ## mp3
         if (filename.find('.mp3') > -1):
             all_mp3_files.append(filename)
     return render_template('index.html', **locals());
 
 
-# 
-def isVMFormat(link):
-    if (link.find('.ova') > -1):
+# 符合圖片檔案
+def isImageFormat(link):
+    if (link.find('.jpg') > -1 or link.find('.png') > -1 or link.find('.gif') > -1 or link.find('.jpeg') > -1):
         return True;
     return False;
 
-def isExploitFormat(link):
-    if (link.find('.zip') > -1):
-        return True;
-    return False;
-
-#TODO: This method
-def isVagrantFileFormat(link):
-    if (link.find('.ova') > -1):
-        return True;
-    return False;
 
 @app.route('/upload', methods=['GET', 'POST'])
 def upload():
     if request.method == 'POST':
         file = request.files['file']
-        upload_path = '{}/{}'.format(UPLOAD_FOLDER, secure_filename(file.filename))
-        print(UPLOAD_F)
+        upload_path = '{}/{}'.format(UPLOAD_FOLDER, file.filename)
         file.save(upload_path)
         return 'ok'
 
